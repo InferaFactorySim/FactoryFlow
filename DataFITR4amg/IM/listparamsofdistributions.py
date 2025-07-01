@@ -132,7 +132,7 @@ def gencodecontinuous(dist,params):
     if dist == 'expon':
         str_lib="import scipy\n"
         str_p='loc='+str(params[0])+'\nlamda='+str(params[1])+"\nnum_datapoints=100\n"
-        str_gen_code="data=scipy.stats.{}.rvs(loc={},scale={},size={})".format(dist,'loc','lamda','num_datapoints')
+        str_gen_code="data=scipy.stats.{}(loc={},scale={})".format(dist,'loc','lamda')
         output=str_lib+str_p+str_gen_code
         str_plist='loc='+str(params[0])+', lamda='+str(params[1])+"\n"
         
@@ -140,41 +140,41 @@ def gencodecontinuous(dist,params):
     elif dist=='norm':
         str_lib="import scipy\n"
         str_p='mean='+str(params[0])+"\n"+'variance='+str(params[1])+"\nnum_datapoints=100\n"
-        str_gen_code="data=scipy.stats.{}.rvs(loc={},scale={},size={})".format(dist,'mean','variance','num_datapoints')
+        str_gen_code="data=scipy.stats.{}(loc={},scale={})".format(dist,'mean','variance')
         output=str_lib+str_p+str_gen_code
         str_plist='mean='+str(params[0])+", "+'variance='+str(params[1])+"\n"
         
     elif dist=='lognorm':
         str_lib="import scipy\n"
         str_p='s='+str(params[0])+"\n"+'mean='+str(params[1])+"\n"+'variance='+str(params[2])+"\nnum_datapoints=100\n"
-        str_gen_code="data=scipy.stats.{}.rvs(loc={},scale={},size={})".format(dist,'mean','variance','num_datapoints')
+        str_gen_code="data=scipy.stats.{}(s={},loc={},scale={})".format(dist,'s','mean','variance')
         output=str_lib+str_p+str_gen_code
         str_plist='s='+str(params[0])+', mean='+str(params[1])+", "+'variance='+str(params[1])+"\n"
         
     elif dist=='triang':
         str_lib="import scipy\n"
         str_p='mode='+str(params[0])+"\n"+'lowerlimit='+str(params[1])+"\n"+'upperlimit='+str(params[2])+"\nnum_datapoints=100\n"
-        str_gen_code="data=scipy.stats.{}.rvs(a={},loc={},scale={},size={})".format(dist,'mode','lowerlimit','upperlimit','num_datapoints')
+        str_gen_code="data=scipy.stats.{}(a={},loc={},scale={})".format(dist,'mode','lowerlimit','upperlimit')
         output=str_lib+str_p+str_gen_code
         str_plist='mode='+str(params[0])+", "+'lowerlimit='+str(params[1])+", "+'upperlimit='+str(params[2])+"\n"
         
     elif dist=='uniform':
         str_lib="import scipy\n"
         str_p='lowerlimit='+str(params[0])+"\n"+'upperlimit='+str(params[1])+"\nnum_datapoints=100\n"
-        str_gen_code="data=scipy.stats.{}.rvs(loc={},scale={},size={})".format(dist,'lowerlimit','upperlimit','num_datapoints')
+        str_gen_code="data=scipy.stats.{}(loc={},scale={})".format(dist,'lowerlimit','upperlimit')
         output=str_lib+str_p+str_gen_code  
         str_plist='lowerlimit='+str(params[0])+", "+'upperlimit='+str(params[1])+"\n"
         
     else:
         
-        str_gen_code="data=scipy.stats.{}.rvs("
+        str_gen_code="data=scipy.stats.{}("
         argvals=params[:-2]
         str_params="args="+str(argvals)+"\nnum_datapoints=100\n"
             
-        str_gen_code+='{},loc={},scale={},size={})'
+        str_gen_code+='{},loc={},scale={})'
             
         str_lib="import scipy\n"
-        str_gen=str_gen_code.format(dist,"args",params[-2], params[-1],"num_datapoints")
+        str_gen=str_gen_code.format(dist,"args",params[-2], params[-1])
         output=str_lib+str_params+str_gen
         str_plist="args="+str(argvals)+", loc="+str(params[-2])+", scale="+str(params[-1])+"\n"
         

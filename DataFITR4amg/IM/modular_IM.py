@@ -49,7 +49,8 @@ class modelmatch:
         self.titleplot=str(self.title)+":"+gofoption
         self.binhist=binhist
         self.N=len(self.data)
-        self.GOFdata = {"Test": ["KStest", "Chi squared Test"]}
+        self.GOFdata = {"Test": ["Chi squared Test","KStest", ]}
+        #self.GOFdata = {"Test": ["KStest", "Chi squared Test"]}
         self.SSEdata = {"Test": []}
         self.GOFpval={}
         self.gofoption=gofoption
@@ -350,11 +351,11 @@ class modelmatch:
             #plt.plot(self.bin_edges[:-1],self.pdf,c='r')
             #plt.legend(['histogram("fitting pdf)'])
            
-            self.kdecenter,self.kdepdf,self.kdeh=self.kdecall(self.binhist)
-            SSEvalkde=self.SSE_kde(self.binskde)          
+            #self.kdecenter,self.kdepdf,self.kdeh=self.kdecall(self.binhist)
+            #SSEvalkde=self.SSE_kde(self.binskde)          
        
                
-            valkde= self.GOFtest('kde', self.gofoption)
+            #valkde= self.GOFtest('kde', self.gofoption)
             #plt.plot(self.kdecenter, self.kdepdf,color='red', linestyle="solid" )
             #plt.legend(['histogram derived pdf using KDE)'])
             dictpval_details={}
@@ -384,10 +385,10 @@ class modelmatch:
             dictpval_details={}
             dictpdf_details={}
             dictpdf_details['data']=self.data
-            if self.data.dtype=='int'or 'float':
-                if self.data.dtype=='int':
+            if pd.api.types.is_integer_dtype(self.data) or pd.api.types.is_float_dtype(self.data):
+                if pd.api.types.is_integer_dtype(self.data):
                     self.pdf, self.bin_edges = np.histogram(self.data, bins=max(self.data),density=True )
-                if self.data.dtype=='float':
+                if pd.api.types.is_float_dtype(self.data):
                     self.pdf, self.bin_edges = np.histogram(self.data, bins=self.binhist,density=True )
                 #self.pdf, self.bin_edges = np.histogram(self.data, bins=self.binhist,density=True )
                 #print(self.bin_edges,self.pdf)
