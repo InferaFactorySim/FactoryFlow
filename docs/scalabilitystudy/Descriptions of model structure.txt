@@ -1,0 +1,17 @@
+Model A
+
+10 machines are connected in series. 5th machine has work_capacity=3, others all work_capacity=1. Between 5th and 6th machine there are four buffers. named B_5_6_1,B_5_6_2,.. B5_6_4. All buffers have store capacity=2, except the buffer between 5th and 6th machines. Those have a store capacity=4. Name machines M1,M2,... Buffers as B_src_1, B_1_2,B_2_3,..B_10_sink. Use'src' as id  for source and 'sink' as id  for sink. for these buffers B_5_6_1,B_5_6_2,.. B5_6_4 src_node is M5 and dest_node is M6. For B_10_sink, src_node is 'src' and det_node is sink. Please fetch the data for all nodes and buffers
+
+
+
+Model B
+
+10 machines are connected in series. Use'src' as id  for source and 'sink' as id  for sink. Name machines  M00,M01,..M09 5th machine has work_capacity=3, others all work_capacity=1.  Between 5th(M04) and 6th(M05) machine there are four buffers.All buffers have store capacity=2, except the buffer between 5th and 6th machines. Those have a store capacity=4. named B_04_05_1,B_04_05_2,.. B04_05_4   Other buffers as B_src_00, B_01_02,B_02_03,..B_09_sink.
+There are ten such series. Machine in row 1 will be M00,M01,..M09 Machines in second row will be M10,M11,...M29.  in 3rd row M20, M21,..  Machines in last row will be named M90,M91,..M99 and Buffers as B_src_90, B_91_92,B_92_3,..B_99_sink   B_24_25_1,B_24_25_2,.. are between M24 and M25. In all rows there are 4 buffers between 5th machine and 6th Machine as explained above. That is  B_14_15_1,B_14_15_2,B_14_15_3,B_14_15_4 are between M14 and M15. buffers between 5th and 6th machine as named B_94_95_1,B_94_95_2,B_94_95_3,B_94_95_4 B_94_95_4 are between src_node- M94 and dest_node-M95. choose dest_node and 'src_node' correctly.
+
+
+Model C
+
+
+10 machines are connected in series. Use'src' as id  for source and 'sink' as id  for sink. Name machines  M00,M01,..M09 5th machine has work_capacity=3, others all work_capacity=1.  Between 5th(M04) and 6th(M05) machine there are four buffers. named B_04_05_1,B_04_05_2,.. All buffers have store capacity=2, except the buffer between 5th and 6th machines. Those have a store capacity=4.   Other buffers as B_src_00, B_01_02,B_02_03,..B_09_sink.
+There are ten such series. Machine in row 1 will be M00,M01,..M09 Machines in second row will be M10,M11,...M29.  in 3rd row M20, M21,..  Machines in last row will be named M90,M91,..M99 and Buffers as B_src_90, B_91_92,B_92_3,..B_99_sink   B_24_25_1,B_24_25_2,.. are between M24 and M25. In all rows there are 4 buffers between 5th machine and 6th Machine as explained above. That is  B_14_15_1,B_14_15_2,B_14_15_3,B_14_15_4 are between M14 and M15. buffers between 5th and 6th machine as named B_94_95_1,B_94_95_2,B_94_95_3,B_94_95_4 B_94_95_4 are between src_node- M94 and dest_node-M95. choose dest_node and 'src_node' correctly.  In addition to these there are 5 other buffers that connect a machine in one row to other. "BA_11_21" connects "M11" TO "M21", "BA_27_37" connects 'M27' TO 'M37', "BA_45_55" connects "M45" to "M55", "BA_74_84" connects "M74" to M84. "BA_86_96" connects M86 to M96. There is only one source and one sink for the entire system. source is connected via buffers to the first machine in all rows using buffers B_src_00, B_src_01, B_src_02,.. sink is connected to the last machine in all rows using buffers B_09_sink, B_19_sink,..B_99_sink. 

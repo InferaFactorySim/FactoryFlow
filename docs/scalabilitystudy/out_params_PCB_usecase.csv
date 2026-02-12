@@ -1,0 +1,19 @@
+Parameter,Reference,Matched,Error
+unit,model,model,in $\%$
+Throughput,9.7810,9.7934,0.12
+(Num products/minute),,,
+Average cycle time,2.91,2.89,0.68
+(seconds),,,
+Resource utilisation,0.0816,0.0814,0.20
+of board\_loader unit(\%),,,
+Resource utilisation,0.3261,0.3281,0.6311
+of solder\_printer unit(\%),,,
+Resource utilisation,0.9772,0.9781,0.08
+of Component\_placer,,,
+unit (\%),,,
+"Resource utilisation of
+reflow\_oven(\%)",0.3259,0.3285,0.77
+"Resource utilisation of
+inspection unit(\%)",0.4901,0.4616,5.81
+"Resource utilisation of
+packaging unit(\%)",0.6518,0.6538,0.30

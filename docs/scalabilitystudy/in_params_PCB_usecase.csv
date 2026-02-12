@@ -1,0 +1,28 @@
+"Parameter
+(unit)","Reference model
+(distribution, parameter)","Matched model
+(distribution, parameter)"
+"per job delay of
+board\_loader(seconds)","exponential
+$\lambda$=0.50","exponential
+$\lambda$=0.477"
+"per job delay of
+solder\_printer(seconds)","triangular
+a=0.5, loc=1, scale=2","triangular
+a=0.53, loc=1.02, scale=1.94"
+"per job delay of 
+component\_placer(seconds)","uniform
+a=3, b=6","uniform
+a=3.01, b=5.97"
+"per job delay of
+reflow\_oven(seconds)","normal
+$\mu$=2 , $\sigma$=0.25","lognorm
+a=0.078, loc=-1.15, 3.15"
+"per job delay of
+inspection unit(seconds)","exponential
+$\lambda$=0.30","exponential
+$\lambda$=0.2.81"
+"per job delay of 
+packing unit(seconds)","uniform
+a=2, b=4","uniform
+a=2.01, b=3.99"

@@ -1,0 +1,301 @@
+,,,,,,,TIME CHARACTERISATION (IN SEC),,,,,,ERROR CHARACTERISATION,,,,,,,,,,,,,,,,,,,,,,,,,,GROUND_TRUTH,MODEL DIAGRAM
+,,,,,,COARSE,,,,DETAILED,,,,,,,,,,,,,,,,,,,,,,,,COARSE,,,DETAILED,,,
+ID,CATEGORY,COARSE DESCRIPTION,DETAILED DESCRIPTION,MODEL SIZE,,DESC,,MOD_A,MOD_A_D,DESC,,MOD_D,COARSE,DETAILED,,INTENT MISMATCH ERROR,,NAMING ERROR,,PARAMETER ERROR,,hallucinating:nodes,,hallucinating:edges,,hallucinating:parameters,,hierarchy mismatch error,,syntax error,,factorysimpy syntax violation,,DESC,MOD_A,MOD_A_D,DESC,MOD_A or D,,
+,,,,,,REASONER,AMG,AMG,AMG,REASONER,AMG,AMG,,,,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,COARSE,DETAILED,,,,,,,
+S1,Single_Machine,A system with a single machine,"System has a single machine(ID=MACHINE) with delay 2.  Source (ID= SRC) with inter arrival time of 1.2. SRC is connected to Machine via a Buffer(ID=BUFFER1) and MACHINE to
+ SINK via a Buffer(ID=BUFFER2).. Buffer has capacity of 3. MACHINE has a work_capacity is 2","#Nodes=3
+#Edges=2
+#Parameters=5",,15.944,41.52,36.96,64.88,23.245,64.3224,65.7,"IDs of nodes and edges are different
+default parameter 
+But structure same",SINK 's ID is not picked up unless mentioned as ID=Sink,,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_Coarse.py,factory_model_Coarse_A.py,factory_model_Coarse_A_D.py,factory_model_Detailed.py,factory_model_Detailed_D.py,S1_GT.py,S1_GT.png
+S2,Two_Machine_Sequence,A system with two machine,"System has two machines M1and M2 with delay 2.  Source (ID= SRC) with inter arrival time of 1.2. SRC is connected to M1 and M1 to M2 and M2 to Sink via Buffers, B_src_1, B_1_2, B_2_sink. All buffers have a capacity of 2.","#Nodes=4
+#Edges=3
+#Parameters=6",,25.79,30.07,49.98,55.54,18.38,34.993,35.27,"IDs of nodes and edges are different
+default parameter are used
+But structure same","Made naming errors in buffers if desc says ""name buffers as B_src_1, B_1_2, B_2_3,.."" It did not infer that itshould follwo the naming pattern as B_src_dest.
+SINK is named as sink",,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_2_Coarse.py,factory_model_2_Coarse_A.py,factory_model_2_Coarse_A_D.py,factory_model_2_Detailed.py,factory_model_2_Detailed_D.py,S2_GT.py,S2_GT.png
+S3,Two_Machine_Parallel,A system with two machines connected parallely,"System has two machines M1and M2 with delay 2.  Source (ID= SRC) with inter arrival time of 1.2. SRC is connected to M1 and M1  to Sink via Buffers, B1, B2. M2 is connected parallel to M1 using Buffer B3 and B4. All buffers have a capacity of 2. Source and sink are common. All machines have a processing_Delay of 1.4","#Nodes=4
+#Edges=4
+#Parameters=7",,16.4,24.12,72.19,101.67,52.07,64.54,62.38,"When ID of sink is not mentioned, it considers it as sink. ""
+IDs of nodes and edges are wrongly inferred
+default parameter are used
+But structure same","Made naming errors in buffers; 
+it made new ids for machine as m_connector 
+created hierarchy within.
+
+Inferred two buffers between machine and sink and added a new machine.--SRC is connected to M1 and M1  to Sink via Buffers with IDs B1, B2. M2 is connected parallel to M1 using Buffer with IDs B3 and B4. All buffers have a capacity of 2.",,0,4,0,1,0,0,0,2,0,2,0,0,0,0,0,0,0,0,factory_model_3_Coarse.py,factory_model_3_Coarse_A.py,factory_model_3_Coarse_A_D.py,factory_model_3_Detailed.py,factory_model_3_Detailed_D.py,S3_GT.py,S3_GT.png
+S4,Two_Machine_Loop,A system with two machines in a loop. The system has a source and a sink.,"SRC(0.3)-M1-M2-Sink. one output of M2 goes back to M1 also. All connections are via single buffers. Name buffers B1, B2,..  All machines have a processing_Delay of 2 and buffers have a capacity of 2. ","#Nodes=4
+#Edges=4
+#Parameters=7",,19.4,39.72,51.42,49.11,25.64,59.18,,"IDs of nodes and edges are different
+default parameter are used
+But structure same",Sink 's ID is picked up from the flow diagram in description,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_4_Coarse.py,factory_model_4_Coarse_A.py,factory_model_4_Coarse_A_D.py,factory_model_4_Detailed.py,,S4_GT.py,S4_GT.png
+S5,Homogenous_Machine_Sequence,A sequence of 5 machines,"System has 5 machines each with delay 2.  Source (ID= SRC) with inter arrival time of 1.2. All machines are interconnected via buffers. Name buffers as B1, B2, B3,.. and Machines as M1,M2,... All buffers have a capacity of 2. The sequence ends in a sink (ID=SINK). All machines have a processing_Delay of 2 and buffers have a capacity of 2. ","#Nodes=7
+#Edges=6
+#Parameters=12",,16.05,25.9,55.72,62.26,25.34,45.54,,"IDs of nodes and edges are different
+default parameter are used
+But structure same. Machine names started from 0,1..4",,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_5_Coarse.py,factory_model_5_Coarse_A.py,factory_model_5_Coarse_A_D.py,factory_model_5_Detailed.py,,S5_GT.py,S5_GT.png
+S6,Homogeneous_Parallel_Machines,A system with 5 machines connected in parallel ,"System has 5 machines each with delay 2. 
+ All machines are connected in parallel. SRC is connected to M1 and M1  to Sink via Buffers, B_SRC_1, B_1_SINK. 
+ M2 is connected parallel to M1 using Buffer B_SRC_2 and B_2_SINK. and so on.All buffers have a capacity of 2.  
+ System has a common source (ID= SRC) with inter arrival time of 0.2. and a common sink ""SINK"". All machines have a processing_Delay of 1.1","#Nodes=7
+#Edges=10
+#Parameters=16",,19.46,23.68,49.46,90.24,29.98,54.64,,"IDs of nodes and edges are different
+default parameter are used, ID is given in asuumption but not picked up correctly. Let Buffer IDs be B_SRC_1, B_1_SINK, B_SRC_2, B_2_SINK, AND SO ON--- did not name correctly.
+
+
+But structure same. followed naming patterns in examples fo buffers. Machine names started from 0,1..4",,,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_6_Coarse.py,factory_model_6_Coarse_A.py,factory_model_6_Coarse_A_D.py,factory_model_6_Detailed.py,,S6_GT.py,S6_GT.png
+S7,Heterogeneous_Machine_Sequence,A sequence of 5 heterogenoues machines,"System has 5 machines (M1-M5) in series. M1(delay 1.0, cap 1), M2(2.0, 2), M3(0.5, 5), M4(3.0, 1), M5(1.5, 3). SRC (rate 1.0) feeds M1 via B1. All inter-machine buffers have capacity 2. Ends in SINK.","#Nodes=7
+#Edges=6
+#Parameters=17",,20.02,29.35,95.001,78.54,37.87,52.06,62.04,"IDs of nodes and edges are different
+default parameter are used
+But structure same
+
+did not understand the word heterogenous","Buffer naming error- ""SRC (rate 1.0) feeds M1 via B1"" not inferred well. The buffer names are edge[0], edge[1], etc.",,0,0,15,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_7_Coarse.py,factory_model_7_Coarse_A.py,factory_model_7_Coarse_A_D.py,factory_model_7_Detailed.py,factory_model_7_Detailed_D.py,S7_GT.py,S7_GT.png
+S8,Homogeneous_Machine_Sequence_Multiedge,A linear sequence of 8 machines connected with a sink and a source. There are 4 buffers between 2 and 3rd machines and 6the and 7th machine.  ,"System has 8 machines each with delay 2.  Source (ID= SRC) with inter arrival time of 1.2. All machines are interconnected via buffers. Name buffers as B1, B2, B3,.. and Machines as M1,M2,... All buffers have a capacity of 2. The sequence ends in a sink (ID=SINK). There are 4 buffers between M3 and M4 and M6 and M7. Name extra buffers as B3_1,B3_2. B7_1,B7_2. The in_edge_selection of the machine after multiedge is ""ROUND_ROBIN"".  All machines have a processing_Delay of 2 and buffers have a capacity of 2. ","#Nodes=7
+#Edges=12
+#Parameters=23",,19.71,62.16,67.05,96.41,65,98,69.47,"IDs of nodes and edges are different
+default parameter are used
+But structure same
+
+",Used a function to assign edge selection policy. also added out_edge_selection policy for machine before multi-edge,,0,0,13,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,factory_model_8_Coarse.py,factory_model_8_Coarse_A.py,factory_model_8_Coarse_A_D.py,factory_model_8_Detailed.py,,S8_GT.py,S8_GT.png
+S9,Repeated_Multiedge_Sequence,"There’s a subsytem with ID ""A"" where a single machine is connected to 3 machines in parallel which are then connected to another common machine. this subsytem is connected to another subsystem with ID ""B""  having 2 machines in series. B is again connected to A. Now this whole ABA thing is repeated 3 times and is connected in series. "," There’s a subsytem A where a single machine is connected to 3.
+machines in parallel which are then connected to another common machine. 
+This subsytem is connected to another subsystem B having 2 machines in series. 
+B is again connected to A. Now this whole ABA thing is repeated 3 times and is 
+connected in series.Name machines as M1,M2, and Buffers as B1,B2,.. 
+All machines have a processing_Delay of 2 and buffers have a capacity of 2. 
+THE work_capacity of the machine following the multi-edge be 4 with in_edge_selction as ""ROUND_ROBIN.
+ The system has a source with ID=""SRC and sink with ID=SINK. Machine ID with in a subsystemA are M_1 M1,M2,M3 and M_2 and Buffer IDs are B_M1_1, B_M1_2, B_M1_3 and B_1_M2, B_2_M2, B_3_M2 and subsystem B are M1, M2 and B1, B2,etc. The buffers with IDs  Binter1 and Binter2  for joining A, B, A together and to add multiple ABA together buffers with ID B1, B2, B3,.. are used","#Nodes=38
+#Edges=47
+#Parameters=95",,24.04,46.76,110.313,,41.7,79.3,,"IDs of nodes and edges are different
+default parameter are used
+But structure same
+
+Nmaing error as M[1],M[2],M[3] for M1, M2, M3
+
+Very difficult to explain naming to the generated model if it large",,,0,0,20,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_9_Coarse.py,factory_model_9_Coarse_A.py,factory_model_9_Coarse_A_D.py,factory_model_9_Detailed.py,,S9_GT.py,S9_GT.png
+S10,Splitter,A system with a machine feeding finished parts equally to two other machines,"Source_1 (arrival rate 5.0s) feeds Machine_M1 via Buffer with ID- buffer_main. M1 acts as a router with a split ratio of 0.5 to Path A and 0.5 to Path B. Path A consists of Buffer with ID-Buffer_A_1 feeding Machine_M2 and Buffer with ID-Buffer_A_sink to Sink_1. Path B consists of Buffer with ID- Buffer_B_1 feeding Machine_M3 to Buffer with ID- Buffer_B_sink to Sink_2. M2 and M3 both connect to individual Sinks, Sink_1 and Sink_2 via Buffer with ID- Buffer_A_sink and Buffer with ID- Buffer_B_sink respectively. The out_edge_selection of Machine_M1 is ""ROUND_ROBIN"".All machines have a processing_Delay of 2 and buffers have a capacity of 2","#Nodes=6
+#Edges=5
+#Parameters=10",,12.88,29.97,,,36.4,64.5,,"IDs of nodes and edges are different
+default parameter are used
+Structure had a common sink.
+
+",,,2,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,factory_model_10_Coarse.py,factory_model_10_Coarse_A.py,factory_model_10_Coarse_A_D.py,factory_model_10_Detailed.py,,S10_GT.py,S10_GT.png
+S11,Combiner,Parts flow from two machines and merge to one path and enters a  machine,"Source_1 (rate 10s) and Source_2 (rate 10s) feed into Machine_M1 and Machine_M2 respectively via buffers Buffer_src1 and Buffer_src2, of capacity 2. M1 and M2 both output into Buffer_Join1 and Buffer_Join2 (capacity 10). Both Buffer_Joins  feeds a final Machine_M3 (delay 4.0s) which connects to Sink_1 via a buffer Buffer_main_sink. All machines have a processing_Delay of 2 and buffers have a capacity of 2. The work_capacity of machine_M3 is 2.","#Nodes=6
+#Edges=5
+#Parameters=11",,31.2513,46.1778,92.953,4.73,36.84,95.741,,"IDs of nodes and edges are different
+default parameter are used
+Structure had a common source",,,2,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,factory_model_11_Coarse.py,factory_model_11_Coarse_A.py,factory_model_11_Coarse_A_D.py,factory_model_11_Detailed.py,,S11_GT.py,S11_GT.png
+S12,Homogeneous_Machine_Grid,A linear sequence of 3 machines connected with a sink and a source. 4 such sequences are in parallel. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4,"A production line begins with a Source named SRC generating items every 5 seconds. The line consists of 3 sequential stages. Each stage Stage_1 through Stage_3 is modeled as a subsystem containing a Machine with a processing delay of 2.0 seconds, followed by a Buffer with capacity 2. The output of Stage_3 is connected to a Sink named SINK. There are 4 such sequences in parallel. Name machines in stage_i as Stage_i as Stage_i_M1,, and Buffers as Stage_i_B1,for i from 1 to 3. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4. Name cross conecting buffer as Cross_Buffer_1, Cross_Buffer_2, etc.","#Nodes=20
+#Edges=18
+#Parameters=34",,32.56,56.9,78.1193,88.27,45.54,102.9,92.81,"Identified structure with separate source and sink
+incorrect node and edge names
+no heirarchy
+default parameter are used
+
+Assumed naming conventio is (`Stage_i_M1`) followed by one Buffer (`Stage_i_B1`)--did not follow
+
+
+Hints given for naming convention---M1,M2,M3 AND 3 MACHINE in series-- named it as M[0],M[1],M[2]","src and sink as common
+naming error for edges",,1,16,26,4,0,0,0,6,0,6,0,0,1,4,0,0,0,0,,factory_model_12_Coarse_A.py,factory_model_12_Coarse_A_D.py,factory_model_12_Detailed.py,factory_model_12_Detailed_A.py,S12_GT.py,S12_GT.png
+S13,Heterogeneous_Machine_Grid,"A linear sequence of 3 machines each with a delay of 4,3,2 connected with a sink and a source. 4 such sequences are in parallel. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4","A production line begins with a Source named SRC generating items every 2.5 seconds.  Every sequence of SRC is followed by a buffer ID=B_src_1.Then a line consists of 3 sequential stages. Each stage Stage_i Stage_1 through Stage_3 is modeled as a subsystem containing a Machine, followed by a Buffer. Machine in each stage has a processing delay of 4.0,3 and2  seconds  with capacity 2,3,4 respectively. The output of Stage_3 is connected to a Sink named SINK. There are 4 such sequences in parallel. Name machines in stage_i as Stage_i as Stage_i_M1,, and Buffers as Stage_i_B1,for i from 1 to 3. .. All machines have a processing_Delay of 2 and buffers have a capacity of 2. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4. Name cross conecting buffer as Cross_Buffer_1, Cross_Buffer_2, etc.Row index starts from 1","#Nodes=20
+#Edges=18
+#Parameters=46",,24.22,59.37,115.258,,43.04,109.52,,"Identified structure with separate source and sink
+incorrect node and edge names
+no heirarchy
+default parameter are used.
+
+Repeated pattern of (`Stage_i_M1`) followed by one Buffer (`Stage_i_B1`)--followed naming convention correctly unline in S12
+
+Hints given for naming convention---M1,M2,M3 AND 3 MACHINE in series-- named it as M[0],M[1],M[2]","Produced wrong code, factorysimpy. Tried to connect multiple destinations to same edge
+
+
+Different processing delay values are given for the same machine in description.But, LLM negelected the statement which apears to be generic
+
+",,1,9,12,0,0,0,0,4,0,4,0,0,1,1,0,0,0,4,factory_model_13_Coarse.py,factory_model_13_Coarse_A.py,factory_model_13_Coarse_A_D.py,13_detailed.py,factory_model_13_Detailed_A.py,S13_GT.py,S13_GT.png
+S14,Homogeneous_Machine_Grid_Multiedge,3 machines connected with a sink and a source. 4 such sequences are in parallel. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4. In every row and the 2nd and 3rd machines have 3 buffers in between them,"A production line begins with a Source named Src generating items every 5 seconds. Src connects to first Machine via B_src_1 The line consists of 3 sequential stages. Each stage Stage_1 through Stage_3 is modeled as a subsystem containing a Machine with a processing delay of 4.0 seconds, followed by a Buffer with capacity 2. The output of Stage_3 is connected to a Sink named Sink. There are 4 such sequences in parallel. Name machines in stage_i as Stage_i as Stage_i_M1,, and Buffers as Stage_i_B1,for i from 1 to 3. All machines have a processing_Delay of 2 and buffers have a capacity of 2. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4. In every row and the 2nd and 3rd machines have 3 buffers in between them.Name cross conecting buffer as Cross_Buffer_1, Cross_Buffer_2, etc.Row index starts from 1. And extra buffers in multiedge as B_2_3_1, B_2_3_2","#Nodes=20
+#Edges=26
+#Parameters=42",,31.334,36.7419,41.5,,164.3;45,174.01;116,279.76,"iteration1
+no stages-heirarchy not identified
+But, identified a separate src and sink for each sequence.
+
+iteration2
+Extra buffers are initialised inside stage 2.
+wrong node names. as ""use ID"" is not mentioned explicitly
+
+Hints given for naming convention---M1,M2,M3 AND 3 MACHINE in series-- named it as M[0],M[1],M[2]","system had a common sink and common source. 
+processing delay of 2 is chosen. as it is written - neglected the generic statement.
+",,1,16,16,0,0,0,0,6,0,6,0,0,1,4,0,0,0,0,factory_model_14_Coarse.py,factory_model_14_Coarse_A.py,,factory_model_14_Detailed.py,factory_model_14_Detailed_A.py,S14_GT.py,S14_GT.png
+S15,Heterogeneous_Machine_Grid_Multiedge,"3 machines each with a delay of 4,3,2 connected with a sink and a source. 4 such sequences are in parallel. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4.In every row and the 2nd and 3rd machines have 3 buffers in between them","A production line begins with a Source named SRC generating items every 2.5 seconds.  Every sequence of SRC is followed by a buffer ID=B_src_1.Then a line consists of 3 sequential stages. Each stage Stage_i Stage_1 through Stage_3 is modeled as a subsystem containing a Machine, followed by a Buffer. Machine in each stage has a processing delay of 4.0,3 and2  seconds  with capacity 2,3,4 respectively. The output of Stage_3 is connected to a Sink named SINK. There are 4 such sequences in parallel. Name machines in stage_i as Stage_i as Stage_i_M1,, and Buffers as Stage_i_B1,for i from 1 to 3. .. All machines have a processing_Delay of 2 and buffers have a capacity of 2. There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4. Name cross conecting buffer as Cross_Buffer_1, Cross_Buffer_2, etc.Row index starts from 1There is a connection between the M1 in r1 and M1 in row2 and a connection between M3 in row2 and M3 in row4.In every row and the 2nd and 3rd machines have 3 buffers in between them.And extra buffers in multiedge as B_2_3_1, B_2_3_2","#Nodes=20
+#Edges=26
+#Parameters=54",,28.58,50.9,100.8187,,45.08,114.14,92.63,"common sink and src inferred , no hierarchy,  default parameters are used, incorrect node and edge names. 
+
+Buffer is wrong stage
+
+Hints given for naming convention---M1,M2,M3 AND 3 MACHINE in series-- named it as M[0],M[1],M[2]","A buffer is used to connect between a machine and a extra buffer.
+common sink is wrongly inferred.",,14,15,24,0,0,0,6,7,7,7,0,0,1,1,0,0,0,8,factory_model_15_Coarse.py,factory_model_15_Coarse_A.py,,factory_model_15_Detailed.py,factory_model_15_Detailed_D.py,S15_GT.py,S15_GT.png
+S16,Hierarchical_Repeated_Simple,"A source feeds a production row. Each row consists of a welding cell that processes incoming items and then passes them onward to a sink. Within each welding cell, items are processed by a single machine and temporarily held before exiting the cell.","Source_R1 feeds a logical 'WeldingCell_R1' via a buffer with ID B_src_R1. The cell contains Machine_W1, followed by Buffer_W (cap 5).  The outputs of the cells (from Machine_W1) connects to SINK_R1. There are three such cells in parallel rows R1,R2, R3 that are independent. All machines have a processing_Delay of 2.","#Nodes=9
+#Edges=6
+#Parameters=9",,29.01,61.105,57.8,,36.27,87.3,75.44,naming errors; multiple iterations to get the correct name,Each row was not a subsystem. Did not infer hierarchy. ,,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,factory_model_16_Coarse.py,factory_model_16_Coarse_A.py,,factory_model_16_Detailed.py,factory_model_16_Detailed_A.py,S16_GT.py,S16_GT.png
+S17,Hierarchical_Moderate,A system with two nodes interconnected each with 3 machines in parallel. This is in parallel with another node with 2 machines in parallel. The system has 2 sources but a common_sink,"A node named parallel_mac_3 has 3 machines in parallel. 2 such nodes are interconnected in a series and this is in parallel with a node named parallel_mac_2 which has 2 machines in parallel. The system has 2 sources but a common_sink. Name machine IDs as M1,M2 and buffers IDs as B1, B2,.. in every node. source as Src_1 and Src_2. All machines have a processing_Delay of 2 and buffers have a capacity of 2.  The sources have a interarrival time of 0.5","#Nodes=11
+#Edges=13
+#Parameters=23",,28.34,55.5,59.37,92.05,35.95,58.013,57.02,"Node and edge naming errors.
+Default parameters are used, ","Buffer IDs for buffer in systemmodel node(TOP) is all named as ""edges""",,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_17_Coarse.py,factory_model_17_Coarse_A.py,factory_model_17_Coarse_A_D.py,factory_model_17_Detailed.py,factory_model_17_Detailed_A.py,S17_GT.py,S17_GT.png
+S18,Hierarchical_Structure_with_Loops,A system with 2 nodes interconnected. One node has 2 machines in parallel  and the second one has 2 machines in series . The output of the last node is fed to first machine in node1.  The system has a common source,"Version1:
+A system with 2 nodes (TypeA and TypeB) interconnected. One node has 2 machines in parallel  and the second one has 2 machines in series . The output of the last node is fed to first machine in node1. the system has a common source. All machines have a processing_Delay of 2 and buffers have a capacity of 2.  The src has a interarrival time of 0.3. Name machine IDs as M1,M2 and buffers IDs as B1, B2,.. in every node.
+
+Version2:
+A system with 2 nodes (TypeA and TypeB) interconnected. One node has 2 machines in parallel  and the second one has 2 machines in series . The output of the last in TypeB is fed back to first machine in TypeA. the system has a common source. All machines have a processing_Delay of 2 and buffers have a capacity of 2.  The src has a interarrival time of 0.3. Name machine IDs as M1,M2 and buffers IDs as B1, B2,.. in every node.","#Nodes=6
+#Edges=7
+#Parameters=12",,38.69,62.93,64.48,,59.37,92.05,65.19,"Node and edge naming errors.
+Default parameters are used","Version1:
+Output of lastnode is feed to first machne in node1----- infered wrongly- no loop inferred
+
+Version2:(61.14,73.86) 
+Inferred that there are two Output from typeB to typeA. ""first machine in typeA""--since in typaA connection is paaralle- both machines are assumed as first machine.",,0,1,0,6,0,0,0,0,0,1,0,0,0,0,0,0,0,0,factory_model_18_Coarse.py,factory_model_18_Coarse_A.py,,18_detailed.py,,S18_GT.py,S18_GT.png
+S19,Splitter_joint,A source splits an incoming flow into 3 parallel machines and all three machines ends in a common sink. ,"A source with ID Source(3.3s) feeds a splitter that distributes items to three parallel machines. 
+Machine_Alpha has a processing delay of 1.0s. Machine_Beta and Machine_Gamma 
+ have processing delays of 10.0 and 20s. All three connect to Sink . All buffers 
+ have a capacity of 5. Each machine has its own buffer from the source and to the sink.
+ B_src_i connects Source to Machine_i, and B_sink_i connects Machine_i to Sink.","#Nodes=5
+#Edges=6
+#Parameters=10",,21.08,14.89,45.67,56.975,62.3,75.4,,,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_19_Coarse.py,factory_model_19_Coarse_A.py,,factory_model_19_Detailed.py,factory_model_19_Detailed_A.py,S19_GT.py,S19_GT.png
+S20,Star-topology,The flow from a machine splits into 5 sinks,"A source with ID Source(4.32) feeds central Machine_Hub (delay 2.0s) via Buffer with 
+ID- B_src_hub. Machine_Hub is connected to 5 separate output Buffers (cap 5), each 
+leading to a unique Sink named Sink_North, Sink_South, Sink_East, Sink_West, and Sink_Central.
+ All buffers have a capacity of 5. Each machine has its own buffer from the source and to the sink.
+ B_src_i connects Source to Machine_i, and B_sink_i connects Machine_hub to Sink_i.","#Nodes=7
+#Edges=6
+#Parameters=8",,32.9,48.11,55.64,,31.212,47.03,,"Naming error
+used default parameters
+Correct structured inferred",,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_20_Coarse.py,factory_model_20_Coarse_A.py,,factory_model_20_Detailed.py,,S20_GT.py,S20_GT.png
+S21,Irregular_Mutliple_Interconnections_1,"There are five linear homogenous serial systems in parallel. First, and fourth series have 5 machines each, 2nd and 5th have 4. 3rd have 3 machine. There is interconnection between row1.M2 to row2.m2  , row3.m3 to row4.m4. row4.m1 to row5.m2. All machines are name as M[i], i is the position. and all buffers as B[i], i is the position","There are five linear homogenous serial systems in parallel. First and fourth series have 5 machines each, 2nd and 5th have 4. 3rd have 3 machine. There is interconnection between row1.M2 to row2.m2  , row3.m3 to row4.m4. row4.m1 to row5.m2. All machines are name as M[i], i is the position. and all buffers as B[i], i is the position. All machines have a processing_Delay of 2 and buffers have a capacity of 2.  The src has a interarrival time of 0.3. All machines with multiple input edges will gave a work_capacity of 2","#Nodes=23
+#Edges=27
+#Parameters=52",,32.01,71.45,74.72,92.3,64.15,78.59,,"machines are stored in a list with index-0. row3.m3 is actually row2.m2 as indexing is starting from 0.
+after changing assumption to use ID=B[i+1]----naming error for buffers. except in the series, all other edges are named as edge[0], edge[1]
+after all buffers IDs=B[i+1]--- src_edge[0],.., inter_edge[0], row[0]","naming error for buffers. except in the series, all other edges are named as src_edge[0],.., sink_edge[0], cross_edge[0],  ",,0,0,20,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_21_Coarse.py,factory_model_21_Coarse_A.py,factory_model_21_Coarse_A_D.py,factory_model_21_Detailed.py,,S21_GT.py,S21_GT.png
+S22,Irregular_Mutliple_Interconnections_2,"There is a subsystem that has a source connected to 5 machines in series. This structure is repeated 4 times, where they are in parallel, each with its own source. At the end, they are all connected to the common sink. The third machine in second subsystem is also connected to fourth machine in third subsytem and second machine in fourth subsytem with direction of edge pointing away from third machine in second subsystem.","There is a subsystem that has a source connected to 5 machines in series. This structure is repeated 4 times, where they are in parallel, each with its own source. At the end, they are all connected to the common sink. The third machine in second subsystem is also connected to fourth machine in third subsytem and second machine in fourth subsytem with direction of edge pointing away from third machine in second subsystem.All machines are name as M[i], i is the position. and all buffers as B[i], i is the position. All machines have a processing_Delay of 2 and buffers have a capacity of 2.  The src has a interarrival time of 0.3. All machines with multiple input edges will gave a work_capacity of 2","#Nodes=25
+#Edges=26
+#Parameters=52",,23.69,57.54,58.9,65.8,29.47,66.94,68.57,"naming error for buffers. except in the series, all other edges are named as e[0], e[1].
+
+order in which buffers are not connected  as given as the order in the description.","naming error for buffers. B[i+1] is given for buffers in subsystems. For others outside of subsystems, a different naming is followed-- assigned meaningful IDs when ID info is not given",,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_22_Coarse.py,22_detaile_d.py,factory_model_22_Coarse_A_D.py,factory_model_22_Detailed.py,factory_model_22_Detailed_D.py,S22_GT.py,S22_GT.png
+S23,Repeated_Sequence_Loop_Routing,"The system consists of three identical linear production units where items pass through an inspection point, with a portion looping back for rework while the majority feeds into a central router. This router partitions the total flow equally into two distinct branches, Path A and Path B, to facilitate parallel downstream processing. Finally, each branch passes through a terminal stage and terminates at its own dedicated exit, designated as Sink 1 and Sink 2.","There is a subsystem as follows. Machine_M1 feeds Machine_M2 via a Buffer (cap 5). After Machine_M2, items enter Buffer_Check and Machine_check. Machine_Check routes 20% of items back to the input of Machine_M1 for rework and 80% forward to next machine The rework loop buffer has a capacity of 1. There are 3 such system.  Similarly there is another sub-system as follows- Mac_M1 acts as a router with a split ratio of 0.5 to Path A and 0.5 to Path B. Path A consists of Buffer_A feeding  Mac_M2. Path B consists of Buffer_B feeding Mac_M3. Mac_M2 and Mac_M3 both connect to individual Sinks, Sink_1 and Sink_2 via Buffer_1 and Buffer_2 respectively. 80% out from  Machine_Check in first type of subsystem enters MacM1 that is in the second type of sub system. . All machines have a processing_Delay of 2 and buffers have a capacity of 2 unless not specified before.  The src has a interarrival time of 0.3. All machines with multiple input edges will gave a work_capacity of 2","#Nodes=12
+#Edges=16 
+#Parameters=31",,25.27,60.72,28.7,64.4,33.81,99.1,113.91,naming errors. Detailed naming instructions sometimes is not followed(for buffers),"naming error for buffers. except in the series, assigning meaningful IDs when ID info is not given
+Routing function not inferred. wrongly infer out_edge_selection as  [0.8, 0.2]",,0,7,6,3,0,1,0,2,0,2,0,1,0,3,0,0,0,1,factory_model_23_Coarse.py,factory_model_23_Coarse_A.py,factory_model_23_Coarse_A_D.py,factory_model_23_Detailed.py,factory_model_23_Detailed_D.py,S23_GT.py,S23_GT.png
+S24,Large_Grid,"There is a mesh of 10X10 machines with the source at top left and sink at bottom right. The edges flow right and down. There is no machine at 5th row and 4th column, and from 3rd to 6th column in 7th row. This means the edges directly connect to the next element skipping the absent machines.","There is a mesh of 10X10 machines with a common source and a common sink. The edges flow right and down. There is no machine at 5th row and 4th column, and from 3rd to 6th column in 7th row. This means the edges directly connect to the next element skipping the absent machines horizontally. Vertically if there is no machine skip that connection. The source having delay of 1. Machine IDs are M[1][1], M[1][2],... and buffer IDs are B_11_12,B_11_21, .. Let all machines have processing_delay of 2.353 and a work_capacity of 1. let all buffers be of capacity=3.All machines with multiple input edges will gave a work_capacity of 3.","#Nodes=97
+#Edges=198
+#Parameters=380",,27.239,58.377,81.52,93.5,86.87,97.3,,"naming errors, used default parameters
+
+connections- src connects to M11--that connects to M12 and M21 nd so on.
+
+no hierarchy
+
+created src and sink but did not connect to machines. did not infer that B_Src_11 should be created to connect src to m[1][1]","R1:connections- src connects to M11--that connects to M12 and M21 nd so on.
+
+",,46,36,0,0,0,0,18,18,18,18,0,0,10,0,0,0,0,0,factory_model_24_Coarse.py,factory_model_24_Coarse_A.py,factory_model_24_Coarse_A_D.py,factory_model_24_Detailed.py,factory_model_24_Detailed_D.py,S24_GT.py,S24_GT.png
+S25,Nested_loops,A system with 4 machines in series.An output of M2 output goes back to M1. An output of M4 output goes back to M1. .,"SRC -> M1 -> M2 -> M3 -> M4 -> SINK. Inner Loop: 30% of M2 output goes back to M1. Outer Loop: 10% of M4 output goes back to M1. All machines delay 2, all buffers capacity 2. Name buffer IDs as B_srcnodeID_destinationnodeID","#Nodes=6
+#Edges=7
+#Parameters=11",,18.87,44.86,84.55,76.52,22.13,79.45,100.36,"naming error.
+structure correctly inferred. 
+routing function not generated","routing function is wrong, deadlock, ",,0,2,0,0,0,2,0,0,0,0,2,2,0,0,0,0,0,2,factory_model_25_Coarse.py,factory_model_25_Coarse_A.py,factory_model_25_Coarse_A_D.py,factory_model_25_Detailed.py,factory_model_25_Detailed_D.py,S25_GT.py,S25_GT.png
+S26,Hierarchical_Irregular_Cross_Connect,Two subsystems where a machine inside Subsystem A connects directly to a specific machine deep inside Subsystem B.,Subsystem_A (3 machines in series) and Subsystem_B (3 machines in series). A custom edge connects Subsystem_A.M2 to Subsystem_B.M3.,"#Nodes=10
+#Edges=9
+#Parameters=0",,34.22,56.16,66.2,70.1,24.23,66.47,,"inferred number of machines wrongly3 and 5
+
+src-m1-m2-m3 and m1-m2-m3-sink; m2 in A to m3 in B. src in only one row and sink in the other row",src-m1-m2-m3 and m1-m2-m3-sink; m2 in A to m3 in B. src in only one row and sink in the other row,,4,4,0,1,0,0,2,2,2,2,0,0,0,0,0,0,1,1,factory_model_26_coarse.py,factory_model_26_Coarse_A.py,factory_model_26_Coarse_A_D.py,factory_model_26_Detailed.py,factory_model_26_Detailed_D.py,S26_GT.py,S26_GT.png
+S27,Multiedge_Feedback_Loop,A series with 2 machines. There is a feedback loop that uses multiple parallel buffers for the return path from M2 to M1.,"M1 feeds M2. M2 feeds SINK. A return path exists from M2 back to M1, but it consists of 3 parallel buffers (B_ret1, B_ret2, B_ret3). M2 uses ""ROUND_ROBIN"" to distribute the feedback items across these 3 buffers. Let Source ID be ""SRC"". If buffer IDs are not available name them as B_srcnodeID_destnodeID","#Nodes=4
+#Edges=6
+#Parameters=1",,22.49,37.005,52.94,49.57,25.18,39.49,,"There is a feedback loop that uses multiple parallel buffers- number of buffers not specified
+
+number of buffers inferred as 2 because the word ""multiple"" was used.
+
+
+",,,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,factory_model_27_Coarse.py,factory_model_27_Coarse_A.py,factory_model_27_cOARSE_A_D.py,factory_model_27_Detailed.py,,S27_GT.py,S27_GT.png
+S28,Repeated_Heterogeneous_Hierarchical_Subsystems,"A system composed of a repeated hierarchical subsystem, where each subsystem contains two machines in series connected by a buffer.  Three such subsystems are connected sequentially, forming a linear hierarchical structure with a single source and a single sink. The subsystems are heterogeneous.","A hierarchical subsystem Cell_X consists of two machines in series with a buffer in between. Three instances of Cell_X are connected in series:
+
+Cell_X_1 has delays (2.0, 2.0)
+Cell_X_2 has delays (2.5, 2.0)
+Cell_X_3 has delays (3.0, 2.5)
+Name machines as M1,M2,.. and buffers as B1,B2,..
+All buffers have capacity 2.Single Source(2.1) and Sink.","#Nodes=8
+#Edges=7
+#Parameters=14",,18.55,52.02,39.71,54.43,26.29,45.21,60.65,structure is infrred. node names and edge names followed the paettern in examples,buffer ID as edge[0],,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,factory_model_28_Coarse.py,factory_model_28_Coarse_A.py,factory_model_28_Coarse_A_D.py,factory_model_28_Detailed.py,factory_model_28_Detailed_D.py,S28_GT.py,S28_GT.png
+S29, Nested_Hierarchy,"A hierarchical system where a  subystem inside a top-level cell contains a machine Machine_T1, a nested hierarchical subsystem with parallel machines  and a single machine in series(M1,M2, M3), and a final machine , Machine_T2 arranged in series between a source and a sink.","Source ""SRC"" feeds Cell_Top, which contains- Machine_T1, a Subsystem Cell_Sub, which itself contains two parallel machines(M1, M2) feeding a machine and finally a Machine_T2.Buffer IDs are all B1, B2,.. (capacity=2) connect all elements. Final output goes to """"SINK"""". All machines are with delay 3.3 ","#Nodes=7
+#Edges=7
+#Parameters=18",,35.93,51.85,79.67,,28.6,79.2919,,inferred 3 as the number of parallel machines. ,"1.Cell_Top is not inferred correctly.
+2.Buffer ID order-- B1, B2, sequentially based on the order of connectin flow.
+It has to start from B1, B2, ... in every class. change should be made in assumptions and description. 
+
+Names are wrong because of the order in which it is created is wrong.
+3.Difficult to infer nested hierarchy",,1,0,0,10,0,0,0,0,0,0,0,0,1,0,0,0,0,0,factory_model_29_Coarse.py,factory_model_29_Coarse_A.py,factory_model_29_Coarse_A_D.py,factory_model_29_Detailed.py,,S29_GT.py,S29_GT.png
+S30,Hierarchy_repeated,"A production line has 4 machines in series and a subsystem . The subsystem consists of 3 machines(M1,M2,M3) in series. In the production line the subsystem is repeated 3 times between the 2nd machine and the 4th machine. All machines have processing delay of 3.","A production line has 4 machines ID=Main_M[i],where i=0,1,2,.. in series and a subsystem . The subsystem consists of 3 machines(M1,M2,M3) in series. In the production line the subsystem is repeated 3 times between the 2nd machine and the 4th machine. All machines have processing delay of 3. All buffers have ID=Bi , i =1,2,3,..","#Nodes=15
+#Edges=17
+#Parameters=13",,36.84,64.42,67.1857,91.24,36.6,79.34,,"7. Assumed the 3rd machine of the main line (`Main_M[2]`) is bypassed or replaced by the subsystems, as the connection is explicitly stated to be ""between the 2nd machine and the 4th machine"".
+","Main_M[2] is assumed to be excluded from the flow path, as the subsystems are inserted between the 2nd (Main_M[1]) and 4th (Main_M[3]) machines. created M[2]. but not connected
+
+
+Assumed ""Round_robin"" at main_M[1] out_edge_policy
+
+Naming error due to the order in which it is created",,6,3,0,3,0,0,3,3,3,0,1,1,0,0,0,0,0,3,,,,,,,
+S31,VeryLarge-I,"The system consists of ten independent production lines arranged in parallel. Each production line contains ten machines connected in strict series, with a single source at the beginning and a single sink at the end. Source and sink are common for all lines. However, between the 5th machine and the 6th machine in every row, there are four parallel buffers instead of one.","10 machines are connected in series. Use'src' as id  for source and 'sink' as id  for sink. Name machines  M00,M01,..M09 5th machine has work_capacity=3, others all work_capacity=1.  Between 5th(M04) and 6th(M05) machine there are four buffers.All buffers have store capacity=2, except the buffer between 5th and 6th machines. Those have a store capacity=4. named B_04_05_1,B_04_05_2,.. B04_05_4   Other buffers as B_src_00, B_01_02,B_02_03,..B_09_sink.
+There are ten such series. Machine in row 1 will be M00,M01,..M09 Machines in second row will be M10,M11,...M29.  in 3rd row M20, M21,..  Machines in last row will be named M90,M91,..M99 and Buffers as B_src_90, B_91_92,B_92_3,..B_99_sink   B_24_25_1,B_24_25_2,.. are between M24 and M25. In all rows there are 4 buffers between 5th machine and 6th Machine as explained above. That is  B_14_15_1,B_14_15_2,B_14_15_3,B_14_15_4 are between M14 and M15. buffers between 5th and 6th machine as named B_94_95_1,B_94_95_2,B_94_95_3,B_94_95_4 B_94_95_4 are between src_node- M94 and dest_node-M95. ","#Nodes=102
+#Edges=140
+#Parameters=240",,21.53,49.2665,72.73,,27.14,51.79,,Assumed that default value of Roundrobin iwill be used and has not passed it.,"no hierarchy, round_robin for out_edge_selection",,0,10,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,,,,,,,
+S32,VeryLarge-II,"Eight machines are connected in series with src as source and sink as sink. Machines are named M00 to M07. Buffers are B_src_00, B_00_01, …, B_07_sink.
+Eight such series form one 8×8 system . Two identical 8×8 systems are present.
+The 5th machines of corresponding rows in both systems are interconnected using cross buffers named B_x_04, B_x_14, and so on","8 machines are connected in series. Use'src' as id  for source and 'sink' as id  for sink. Name machines  M00,M01,..M07 ,   Buffers ID are B_src_00, B_01_02,B_02_03,..B_07_sink.
+There are 8 such series. 2 such complete 8*8 systems are present in the system model. there are cross buffers bet M04 in 8*8_sys_1 to M04 in 8*8_sys_2. Similarly all 5th machines are inter connected between these systems B ID would be B_x_04, B_x_14, and so on ","#Nodes=132
+#Edges=136
+#Parameters=0",,33.79,77.46,,,41.14,74.66,,Roundrobin for out_edge_selection of interconnected machines,Assumed that default value of Roundrobin iwill be used and has not passed it.,,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,,,,
+S33,VeryLarge-III,"5 machines, a source and sink are in series and 5 such series forms a subsystem with ID= 5*5_sys_i  and it is repeated 4 times.  The machine in the 2nd row and 3rd column of all the subsystems are interconnected.","5 machines are connected in series. Use'src' as id  for source and 'sink' as id  for sink. Name machines  M00,M01,.. ,   Buffers ID are B_src_00, B_01_02,B_02_03,.
+There are 5 such series. 4 such complete 5*5 systems are present in the system model. there are cross buffers between  M23 of all 5*5_sys_i are interconnected using buffers i=1,2,3,4.  Buffer used for crossconnection will have ID  B_x_1, B_x_2, and so on 
+","#Nodes=108
+#Edges=152
+#Parameters=0",,26.48,47.79,74.94,,66.07,70.54,59.78,Roundrobin for out_edge_selection of interconnected machines,B_x_4 is created and hallucinated a sink and a flow from all M23 to the new hallucinated sink,,0,2,0,0,4,0,0,1,0,1,0,0,0,0,0,0,0,0,,,,,,,
+S34,VeryLarge-IV,A series of 100 machines ,"A series of 100 machine with ID= M[i], i=0,.. and buffer IDs are B[i] i=0,..","#Nodes=102
+#Edges=103
+#Parameters=0",,24.74,23.7554,,,35.6632,49.31,,,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,,,,,,
+S35,VeryLarge-V,A systemA with  machine that splits into 10 machines  and the output from these machines ends in another a machine. There are 5 such systems that are connected in series .  There is another systemB with 10 machines in series and there are 5 such systems. the last machine in systemA is connected to the first machines in each row in systemB,"A systemA with  machine (Mp_in)  that splits into 10 machines  and the output from these machines ends in another a machine  (Mp_out) . There are 5 such systems that are connected in series .  There is another systemB with 10 machines in series and there are 5 such systems. the last machine in systemA is connected to the first machines in each row in systemB. Machines in parallel systems will have ID Mp[i] where i =0,..  and Buffers in parallel will have ID Bp[i] where i=0,...  Machines in series system will have ID M[i][j] i,j=0,.. and buffers in series will have id B_src_dest where src is the position of src machine and dest is the position of destination machine. All other buffers are named with ID Bi where i=1,2,3..",,,21.5168,61.52,,,27.01,80.38,,Roundrobin for out_edge_selection of interconnected machines. ,Roundrobin for out_edge_selection of interconnected machines. ,,0,0,0,0,10,10,0,0,0,0,0,0,0,0,0,0,0,0,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,79,128,162,75,28,14,31,51,33,49,3,5,15,26,0,0,1,19,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"heterogenous sequence. It did not give different params to each machine - S7_coarse
+out_edge_selection= used a function 
+multiedge input given without being told-S8
+names as buffer--- does not pick up ID from it
+S10-Assumptions sys Buffer_PathA. but code uses different name",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
