@@ -1,0 +1,1 @@
+The results of the error characterization study conducted on FactoryFlow with Python as IR is available in experiment.csv. Links to all the generated models are available in the csv. 
