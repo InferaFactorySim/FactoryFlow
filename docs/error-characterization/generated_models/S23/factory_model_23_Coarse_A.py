@@ -1,0 +1,109 @@
+"""
+ModelDescription:
+The system consists of three identical linear production units where items pass through an inspection point, with a portion looping back for rework while the majority feeds into a central router. This router partitions the total flow equally into two distinct branches, Path A and Path B, to facilitate parallel downstream processing. Finally, each branch passes through a terminal stage and terminates at its own dedicated exit, designated as Sink 1 and Sink 2. 
+
+
+ MODEL ASSUMPTIONS:
+1. Defined a class named `Subsystem1` to represent the repeated pattern of "three identical linear production units".
+2. Inferred a `Source` node named `src` within each `Subsystem1_i` to generate items, as no source was explicitly described for the units.i=1,2,3
+3. Mapped the "inspection point" to a `Machine` node named `M1` within each `Subsystem1`.
+4. Mapped the "rework" process to a `Machine` node named `M2` within each `Subsystem1` and a "check" to a `Machine` node named `Machine_check`
+5. Inferred the internal flow of the unit as: `src` connects to `M1`.
+6. Inferred the rework loop connections as: `M1` connects to `M2`, and `Machine_check` connects back to `M1` Via  buffer with ID 'B_rework'. 'M2' connects to 'Machine_check' via 'B_check'
+7. Mapped the "central router" to a `Machine` node named `Mac_M1`.
+8. Mapped the "terminal stage" for Path A and Path B to `Machine` nodes named `Mac_M1` and `Mac_M2` respectively.
+9. Inferred connections from the units to the router: The `Machine_check` of all three `Subsystem1` instances connects to the `Mac_M1` via buffer with ID 'Bi'
+10. Inferred connections for Path A: `Mac_M1` connects to `Mac_M2` via B_A1, which connects to `sink_1` VIA 'B_A2.
+11. Inferred connections for Path A: `Mac_M1` connects to `Mac_M3` via B_B1, which connects to `sink_2` VIA 'B_B2.
+12. Used default edge type `Buffer` for all edges connecting nodes as edge type was not specified.
+13. Used a single buffer for every connection between nodes.
+14. Used default values for processing delays, inter-arrival times, and buffer capacities for all components.
+"""
+
+import simpy
+import factorysimpy
+from factorysimpy.nodes.node import Node
+from factorysimpy.nodes.machine import Machine
+from factorysimpy.edges.buffer import Buffer
+from factorysimpy.nodes.source import Source
+from factorysimpy.nodes.sink import Sink
+
+class Subsystem1(Node):
+    def __init__(self, env, id):
+        super().__init__(env, id)
+        
+        # creating nodes
+        self.src = Source(env, id="src")
+        self.M1 = Machine(env, id="M1")
+        self.M2 = Machine(env, id="M2")
+        self.Machine_check = Machine(env, id="Machine_check")
+        self.add_child_node([self.src, self.M1, self.M2, self.Machine_check])
+        
+        # creating edges
+        self.e = [Buffer(env, id=f"edge[{i}]") for i in range(2)]
+        self.B_check = Buffer(env, id="B_check")
+        self.B_rework = Buffer(env, id="B_rework")
+        self.add_child_edge(self.e)
+        self.add_child_edge([self.B_check, self.B_rework])
+        
+        # connecting nodes
+        self.e[0].connect(self.src, self.M1)
+        self.e[1].connect(self.M1, self.M2)
+        self.B_check.connect(self.M2, self.Machine_check)
+        self.B_rework.connect(self.Machine_check, self.M1)
+
+class SystemModel(Node):
+    def __init__(self, env, id):
+        super().__init__(env, id)
+        
+        # creating subsystems
+        self.subsystems = [Subsystem1(env, id=f"Subsystem1[{i}]") for i in range(3)]
+        self.add_child_node(self.subsystems)
+        
+        # creating central router and terminal machines
+        self.Mac_M1 = Machine(env, id="Mac_M1")
+        self.Mac_M2 = Machine(env, id="Mac_M2")
+        self.Mac_M3 = Machine(env, id="Mac_M3")
+        self.add_child_node([self.Mac_M1, self.Mac_M2, self.Mac_M3])
+        
+        # creating sinks
+        self.sink_1 = Sink(env, id="sink_1")
+        self.sink_2 = Sink(env, id="sink_2")
+        self.add_child_node([self.sink_1, self.sink_2])
+        
+        # creating edges from subsystems to router
+        self.Bi = [Buffer(env, id=f"B[{i}]") for i in range(3)]
+        self.add_child_edge(self.Bi)
+        
+        # connecting subsystems to router
+        for i in range(3):
+            self.Bi[i].connect(self.subsystems[i].Machine_check, self.Mac_M1)
+            
+        # creating edges for Path A
+        self.B_A1 = Buffer(env, id="B_A1")
+        self.B_A2 = Buffer(env, id="B_A2")
+        self.add_child_edge([self.B_A1, self.B_A2])
+        
+        # connecting Path A
+        self.B_A1.connect(self.Mac_M1, self.Mac_M2)
+        self.B_A2.connect(self.Mac_M2, self.sink_1)
+        
+        # creating edges for Path B
+        self.B_B1 = Buffer(env, id="B_B1")
+        self.B_B2 = Buffer(env, id="B_B2")
+        self.add_child_edge([self.B_B1, self.B_B2])
+        
+        # connecting Path B
+        self.B_B1.connect(self.Mac_M1, self.Mac_M3)
+        self.B_B2.connect(self.Mac_M3, self.sink_2)
+
+# initializing simpy environment
+env = simpy.Environment()
+# creating system model
+TOP = SystemModel(env, "TOP")
+# filling hierarchical ids
+TOP.fill_hierarchical_id()
+# validating model
+TOP.validate()
+# running simulation
+TOP.run_simulation(25)
