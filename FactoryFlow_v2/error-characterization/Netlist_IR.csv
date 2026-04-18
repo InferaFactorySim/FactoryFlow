@@ -1,0 +1,21 @@
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+ID,CATEGORY,DETAILED DESCRIPTION,MODEL SIZE,INTENT MISMATCH ERROR,NAMING ERROR,PARAMETER ERROR,hallucinating:nodes,hallucinating:edges,hallucinating:parameters,hierarchy mismatch error,syntax error,
+,,,,,,,,,,,,factorysimpy syntax violation
+S7,,"System has 5 machines (M1-M5) in series. M1(delay 1.0, cap 1), M2(2.0, 2), M3(0.5, 5), M4(3.0, 1), M5(1.5, 3). SRC (rate 1.0) feeds M1 via B1. All inter-machine buffers have capacity 2. Ends in SINK.","#Nodes=7
+#Edges=6
+#Parameters=17",0,0,0,0,0,0,0,0,0
+S21,Irregular_Mutliple_Interconnections_1,"There are five linear homogenous serial systems in parallel. First and fourth series have 5 machines each, 2nd and 5th have 4. 3rd have 3 machine.  Name machines as row1.M1, row1.M2,..There is interconnection between row1.M2 to row2.M2  , row3.M3 to row4.M4. row4.M1 to row5.M2. All machines are name as M[i], i is the position. and all buffers as B[i], i is the position. All machines have a processing_delay of 2 and buffers have a capacity of 2.  The src has a interarrival time of 0.3. All machines with multiple input edges will gave a work_capacity of 2.","#Nodes=23
+#Edges=27
+#Parameters=52",5,15,1,0,0,0,5,0,0
+S27,,"M1 feeds M2. M2 feeds SINK. A return path exists from M2 back to M1, but it consists of 3 parallel buffers (B_ret1, B_ret2, B_ret3). M2 uses ROUND_ROBIN to distribute the feedback items across these 3 buffers. Let Source ID be SRC. If buffer IDs are not available name them as B_srcnodeID_destnodeID","#Nodes=4
+#Edges=6
+#Parameters=1",0,0,4,0,0,0,0,0,0
+S28,,"A hierarchical subsystem Cell_X consists of two machines in series with a buffer in between. Three instances of Cell_X are connected in series:Cell_X_1 has delays (2.0, 2.0).Cell_X_2 has delays (2.5, 2.0).Cell_X_3 has delays (3.0, 2.5).Name machines as M1,M2,.. and buffers as B1,B2,..All buffers have capacity 2.Single Source(2.1) and Sink.","#Nodes=8
+#Edges=7
+#Parameters=14",,12,0,0,0,0,3,0,0
+S34,,"A series of 100 machine with ID= M[i], i=0,.. and buffer IDs are B[i] i=0,.. The series has a src and a sink","#Nodes=102
+#Edges=103
+#Parameters=0",,203,0,0,0,0,0,0,0
