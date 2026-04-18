@@ -42,8 +42,8 @@ logger.debug("AMG Logger initialized.")
 from dotenv import load_dotenv
 load_dotenv()
 #GEMINI_API_KEY
-if not os.getenv("GOOGLE_API_KEY_3_FACTORYFLOW_ERROR_ANALYSIS"):
-    raise EnvironmentError("❌ GOOGLE_API_KEY not found in environment or .env file")
+if not os.getenv("GEMINI_API_KEY"):
+    raise EnvironmentError("❌ GEMINI_API_KEY not found in environment or .env file")
 
 
 
@@ -79,13 +79,9 @@ class AMGState(TypedDict):
 # LLM
 # ======================================================================
 
-api_key = os.getenv("GOOGLE_API_KEY_3_FACTORYFLOW_ERROR_ANALYSIS")
+api_key = os.getenv("GEMINI_API_KEY")
 
-#llm = ChatGoogleGenerativeAI(
-#    model="gemini-3-pro-preview",
-#    google_api_key=api_key, # Explicitly pass your custom variable
-#    temperature=0
-#)
+
 llm = ChatGoogleGenerativeAI(
     model="gemini-3-pro-preview",
     google_api_key=api_key,
